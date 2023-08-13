@@ -34,9 +34,9 @@ services:
       - VERSION=docker
       - PLEX_CLAIM= #optional
     volumes:
-      - /path/to/library:/config
-      - /path/to/tvseries:/tv
-      - /path/to/movies:/movies
+      - ./plex/config:/config
+      - ./plex/tv:/tv
+      - ./plex/movies:/movies
     restart: unless-stopped
   radarr:
     image: lscr.io/linuxserver/radarr:latest
