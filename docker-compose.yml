@@ -73,8 +73,8 @@ services:
       - TZ=Etc/UTC
       - WEBUI_PORT=8080
     volumes:
-      - /path/to/appdata/config:/config
-      - /path/to/downloads:/downloads
+      - ./qbittorrent/config:/config
+      - /data/torrents:/downloads
     ports:
       - 8080:8080
       - 6881:6881
