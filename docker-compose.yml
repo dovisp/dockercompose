@@ -40,7 +40,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
+      - TZ=Europe/Vilnius
       - VERSION=docker
       - PLEX_CLAIM= #optional
     volumes:
@@ -54,7 +54,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
+      - TZ=Europe/Vilnius
     volumes:
       - ./radarr/config:/config
       - /data:/data
@@ -87,7 +87,7 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
+      - TZ=Europe/Vilnius
       - WEBUI_PORT=8080
     volumes:
       - ./qbit/config:/config
@@ -107,7 +107,7 @@ services:
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - LOG_HTML=${LOG_HTML:-false}
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
-      - TZ=Europe/London
+      - TZ=Europe/Vilnius
     ports:
       - "${PORT:-8191}:8191"
     restart: unless-stopped
@@ -123,7 +123,7 @@ services:
       - "67:67/udp"
       - "80:80/tcp"
     environment:
-      TZ: 'Etc/UTC'
+      TZ: 'Europe/Vilnius'
       # WEBPASSWORD: 'set a secure password here or it will be random'
     volumes:
       - './etc-pihole:/pihole'
