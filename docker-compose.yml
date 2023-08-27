@@ -57,7 +57,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - ./radarr/config:/config
-      - /data/:/data
+      - /data:/data
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -114,19 +114,23 @@ services:
     networks:
       main:
         ipv4_address: 172.20.0.6
-  sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
-    container_name: sonarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-    volumes:
-      - ./sonarr/config:/config
-      - /data/:/data
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
     ports:
-      - 8989:8989
-    restart: unless-stopped
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: 'America/Chicago'
+      # WEBPASSWORD: 'set a secure password here or it will be random'
+    volumes:
+      - './etc-pihole:/pihole'
+      - './etc-dnsmasq.d:/dnsmasq.d'
+    cap_add:
+      - NET_ADMIN
     networks:
       main:
         ipv4_address: 172.20.0.7
+    restart: unless-stopped
