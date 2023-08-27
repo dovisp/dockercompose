@@ -132,5 +132,5 @@ services:
       - NET_ADMIN
     networks:
       main:
-        ipv4_address: 172.20.0.7
+        ipv4_address: 172.20.0.20
     restart: unless-stopped
