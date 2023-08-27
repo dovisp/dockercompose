@@ -123,7 +123,7 @@ services:
       - "67:67/udp"
       - "80:80/tcp"
     environment:
-      TZ: 'America/Chicago'
+      TZ: 'Etc/UTC'
       # WEBPASSWORD: 'set a secure password here or it will be random'
     volumes:
       - './etc-pihole:/pihole'
