@@ -114,23 +114,3 @@ services:
     networks:
       main:
         ipv4_address: 172.20.0.6
-  pihole:
-    container_name: pihole
-    image: pihole/pihole:latest
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "67:67/udp"
-      - "80:80/tcp"
-    environment:
-      TZ: 'Europe/Vilnius'
-      # WEBPASSWORD: 'set a secure password here or it will be random'
-    volumes:
-      - './etc-pihole:/pihole'
-      - './etc-dnsmasq.d:/dnsmasq.d'
-    cap_add:
-      - NET_ADMIN
-    networks:
-      main:
-        ipv4_address: 172.20.0.20
-    restart: unless-stopped
