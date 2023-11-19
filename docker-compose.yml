@@ -1,6 +1,4 @@
 version: "3.8"
-
-
 networks:
   main:
     ipam:
@@ -21,7 +19,7 @@ services:
       PACKWIZ_URL: https://raw.githubusercontent.com/dovisp/aSimpleSMPPack/main/pack.toml
       DIFFICULTY: "HARD"
       ENABLE_COMMAND_BLOCK: "true"
-      ONLINE_MODE: "FALSE"
+      ONLINE_MODE: "TRUE"
       ALLOW_FLIGHT: "TRUE"
       LEVEL_TYPE: "terra:overworld/overworld"
       USE_AIKAR_FLAGS: "TRUE"
@@ -88,12 +86,12 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Vilnius
-      - WEBUI_PORT=8080
+      - WEBUI_PORT=9090
     volumes:
       - ./qbit/config:/config
       - /data/torrents:/torrents
     ports:
-      - 8080:8080
+      - 9090:9090
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
@@ -130,12 +128,11 @@ services:
     networks:
       main:
         ipv4_address: 172.20.0.7
-  homeassistant:
-    container_name: homeassistant
-    image: "ghcr.io/home-assistant/home-assistant:stable"
+  apache:
+    image: httpd:latest
+    container_name: apache
+    ports:
+      - '8080:80'
     volumes:
-      - ./homeassist:/config
-      - /etc/localtime:/etc/localtime:ro
+      - ./apache:/usr/local/apache2/htdocs
     restart: unless-stopped
-    privileged: true
-    network_mode: host
