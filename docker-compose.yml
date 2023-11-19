@@ -147,6 +147,5 @@ services:
     image: mysql:latest
     container_name: mysqldb
     restart: unless-stopped
-    environment:
     volumes:
       - ./db:/var/lib/mysql
