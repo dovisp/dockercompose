@@ -132,7 +132,7 @@ services:
     image: httpd:latest
     container_name: apache
     ports:
-      - '8080:80'
+      - '8081:80'
     volumes:
       - ./apache:/usr/local/apache2/htdocs
     restart: unless-stopped
@@ -140,7 +140,7 @@ services:
     image: wordpress:latest
     container_name: wp
     ports:
-      - 80:80
+      - '80:80'
     volumes:
       - ./wordpress:/var/www/html
   db:
