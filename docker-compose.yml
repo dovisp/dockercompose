@@ -136,3 +136,17 @@ services:
     volumes:
       - ./apache:/usr/local/apache2/htdocs
     restart: unless-stopped
+  wordpress:
+    image: wordpress:latest
+    container_name: wp
+    ports:
+      - 80:80
+    volumes:
+      - ./wordpress:/var/www/html
+  db:
+    image: mysql:latest
+    container_name: mysqldb
+    restart: unless-stopped
+    environment:
+    volumes:
+      - ./db:/var/lib/mysql
