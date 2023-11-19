@@ -19,7 +19,7 @@ services:
       PACKWIZ_URL: https://raw.githubusercontent.com/dovisp/aSimpleSMPPack/main/pack.toml
       DIFFICULTY: "HARD"
       ENABLE_COMMAND_BLOCK: "true"
-      ONLINE_MODE: "TRUE"
+      ONLINE_MODE: "FALSE"
       ALLOW_FLIGHT: "TRUE"
       LEVEL_TYPE: "terra:overworld/overworld"
       USE_AIKAR_FLAGS: "TRUE"
