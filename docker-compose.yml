@@ -128,24 +128,23 @@ services:
     networks:
       main:
         ipv4_address: 172.20.0.7
-  apache:
-    image: httpd:latest
-    container_name: apache
-    ports:
-      - '8081:80'
-    volumes:
-      - ./apache:/usr/local/apache2/htdocs
-    restart: unless-stopped
   wordpress:
     image: wordpress:latest
     container_name: wp
+    restart: unless-stopped
     ports:
       - '80:80'
     volumes:
       - ./wordpress:/var/www/html
+    networks:
+      main:
+        ipv4_address: 172.20.0.20
   db:
     image: mysql:latest
     container_name: mysqldb
     restart: unless-stopped
     volumes:
       - ./db:/var/lib/mysql
+    networks:
+      main:
+        ipv4_address: 172.20.0.21
