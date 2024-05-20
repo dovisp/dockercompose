@@ -1,0 +1,134 @@
+networks:
+  main:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.0.0/24"
+services:
+#  mc:
+#    image: itzg/minecraft-server
+#    tty: true
+#    stdin_open: true
+#    restart: unless-stopped
+#    ports:
+#      - "25565:25565"
+#      - "6969:6969"
+#      - "24454:24454/udp"
+#    environment:
+#      EULA: "TRUE"
+#      VERSION: 1.20.4
+#      TYPE: FABRIC
+#      PACKWIZ_URL: https://raw.githubusercontent.com/dovisp/aSimpleSMPPack/main/pack.toml
+#      DIFFICULTY: "NORMAL"
+#      ENABLE_COMMAND_BLOCK: "true"
+#      ONLINE_MODE: "TRUE"
+#      ALLOW_FLIGHT: "TRUE"
+#      USE_AIKAR_FLAGS: "TRUE"
+#      MEMORY: 4G
+#      STOP_SERVER_ANNOUNCE_DELAY: 10
+#    volumes:
+#      # attach the relative directory 'data' to the container's /data path
+#      - ./mc-server:/data
+#    networks:
+#      main:
+#        ipv4_address: 172.20.0.10
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Vilnius
+    volumes:
+      - ./radarr/config:/config
+      - /data:/data
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+    networks:
+      main:
+        ipv4_address: 172.20.0.3
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Vilnius
+      - DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel
+    volumes:
+      - ./jellyfin/config:/config
+      - /data/media/tv:/tvshows
+      - /data/media/movies:/movies
+    ports:
+      - 8096:8096
+      - 8920:8920
+      - 7359:7359/udp
+      - 1900:1900/udp
+    restart: unless-stopped
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Vilnius
+      - AUTO_UPDATE=true
+    volumes:
+      - ./jackett/config:/config
+      - /data/blackhole:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+    networks:
+      main:
+        ipv4_address: 172.20.0.2
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Vilnius
+      - WEBUI_PORT=9090
+    volumes:
+      - ./qbit/config:/config
+      - /data/torrents:/torrents
+    ports:
+      - 9090:9090
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    networks:
+      main:
+        ipv4_address: 172.20.0.5
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=Europe/Vilnius
+    ports:
+      - "${PORT:-8191}:8191"
+    restart: unless-stopped
+    networks:
+      main:
+        ipv4_address: 172.20.0.6
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Vilnius
+    volumes:
+      - ./sonarr/config:/config
+      - /data/:/data
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    networks:
+      main:
+        ipv4_address: 172.20.0.7
